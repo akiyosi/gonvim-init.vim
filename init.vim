@@ -1,4 +1,4 @@
-" Define environment variable
+" Environment variable
 if has("win64")
   let $XDG_CONFIG_HOME = expand($LOCALAPPDATA)
 else
@@ -6,6 +6,12 @@ else
 endif
 let $XDG_CACHE_HOME  = '~/.cache'
 
+" Python path
+let $PYENV_ROOT = systemlist('pyenv root')[0]
+let g:python_host_prog =  expand($PYENV_ROOT) . '/versions/neovim2/bin/python'
+let g:python3_host_prog = expand($PYENV_ROOT) . '/versions/neovim3/bin/python'
+" disable python2
+let g:loaded_python_provider = 1
 
 " Define dein repo path
 let s:dein_dir = expand($XDG_CACHE_HOME) . '/dein'
@@ -51,6 +57,8 @@ set noruler
 
 " Useful setting
 set whichwrap=b,s,h,l
+set ignorecase
+nnoremap <Esc><Esc> :nohlsearch<CR>
 
 
 " Mapping for gonvim-fuzzy

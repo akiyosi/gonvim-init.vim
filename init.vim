@@ -1,7 +1,11 @@
-
 " Define environment variable
-let $XDG_CONFIG_HOME = '~/.config'
+if has("win64")
+  let $XDG_CONFIG_HOME = expand($LOCALAPPDATA)
+else
+  let $XDG_CONFIG_HOME = '~/.config'
+endif
 let $XDG_CACHE_HOME  = '~/.cache'
+
 
 " Define dein repo path
 let s:dein_dir = expand($XDG_CACHE_HOME) . '/dein'
@@ -42,6 +46,8 @@ syntax enable
 " I use Gonvim UI instead of following
 set laststatus=0
 set noshowmode
+set noruler
+
 
 " Useful setting
 set whichwrap=b,s,h,l
@@ -56,3 +62,4 @@ nnoremap <Space>ff :GonvimFuzzyFiles<CR>
 nnoremap <Space>fg :GonvimFuzzyAg<CR>
 nnoremap <Space>fb :GonvimFuzzyBuffers<CR>
 nnoremap <Space>fl :GonvimFuzzyBLines<CR>
+

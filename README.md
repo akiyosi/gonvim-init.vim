@@ -1,0 +1,1 @@
+# gonvim-init.vim

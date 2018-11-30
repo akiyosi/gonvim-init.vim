@@ -1,4 +1,4 @@
-" Environment variable
+" ʕ◔ϖ◔ʔ Environment variable
 if has("win64")
   let $XDG_CONFIG_HOME = expand($LOCALAPPDATA)
   let $XDG_DATA_HOME = expand($LOCALAPPDATA)
@@ -9,41 +9,44 @@ else
   let $XDG_CACHE_HOME  = expand($HOME.'/.cache')
 endif
 
-" Python path
+" ʕ◔ϖ◔ʔ Python path
 if has("win64")
   "" add python's path to the %PATH% environment variable, 
   "" or set the following variable
   "let g:python_host_prog =  'P:\ath\to\python2.exe'
   "let g:python3_host_prog = 'P:\ath\to\python3.exe'
 else
-  "" if you using pyenv:
+  "" ʕ◔ϖ◔ʔ if you using pyenv, set $PYENV_ROOT:
   let $PYENV_ROOT = systemlist('pyenv root')[0]
-  "" python path
+  "" ʕ◔ϖ◔ʔ python path
   let g:python_host_prog =  expand($PYENV_ROOT) . '/shims/python'
   let g:python3_host_prog = expand($PYENV_ROOT) . '/shims/python3'
 endif
-"" disable python2
+"" ʕ◔ϖ◔ʔ disable python2
 let g:loaded_python_provider = 1
 
-" Define dein repo path
+" ʕ◔ϖ◔ʔ Define dein repo path
 let s:dein_dir = expand($XDG_CACHE_HOME) . '/dein'
 let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
 
-" Clone dein.vim repository if it's not exits.
+" ʕ◔ϖ◔ʔ Clone dein.vim repository if it's not exits.
 if !isdirectory(s:dein_repo_dir)
   call system('git clone https://github.com/Shougo/dein.vim ' . shellescape(s:dein_repo_dir))
 endif
 
-" Add the dein installation directory into runtimepath
+" ʕ◔ϖ◔ʔ Add the dein installation directory into runtimepath
 let &runtimepath = s:dein_repo_dir .",". &runtimepath
+let g:dein#install_process_timeout = 9600
 
 if dein#load_state(expand(s:dein_dir))
   call dein#begin(expand(s:dein_dir))
 
   call dein#add('Shougo/dein.vim')
-  call dein#add('akiyosi/gonvim-fuzzy')
+  if exists('g:gonvim_running')
+    call dein#add('akiyosi/gonvim-fuzzy')
+  endif
 
-  " Define dein toml file
+  " ʕ◔ϖ◔ʔ Define dein toml file
   let s:toml_dir  = expand($XDG_CONFIG_HOME) . '/nvim'
   if has("win64")
     let s:toml_file = s:toml_dir . '/dein-win.toml'
@@ -56,7 +59,7 @@ if dein#load_state(expand(s:dein_dir))
   call dein#save_state()
 endif
 
-" Installation check.
+" ʕ◔ϖ◔ʔ Installation check
 if dein#check_install()
   call dein#install()
 endif
@@ -65,25 +68,27 @@ filetype plugin indent on
 syntax enable
 
 
-" I use Gonvim UI instead of following
-set laststatus=0
-set noshowmode
-set noruler
-
-
-" Useful setting
+" ʕ◔ϖ◔ʔ Useful setting
+set title
 set whichwrap=b,s,h,l
+set mouse=a
 set ignorecase
+set inccommand=split
+let mapleader = "\<Space>"
 nnoremap <Esc><Esc> :nohlsearch<CR>
 
-
-" Mapping for gonvim-fuzzy
-let mapleader = "\<Space>"
-nnoremap <leader><leader> :GonvimWorkspaceNew<CR>
-nnoremap <leader>n :GonvimWorkspaceNext<CR>
-nnoremap <leader>p :GonvimWorkspacePrevious<CR>
-nnoremap <Space>ff :GonvimFuzzyFiles<CR>
-nnoremap <Space>fg :GonvimFuzzyAg<CR>
-nnoremap <Space>fb :GonvimFuzzyBuffers<CR>
-nnoremap <Space>fl :GonvimFuzzyBLines<CR>
-
+" ʕ◔ϖ◔ʔ Gonvim setting
+if exists('g:gonvim_running')
+  " ʕ◔ϖ◔ʔ Use Gonvim UI instead of vim native UII
+  set laststatus=0
+  set noshowmode
+  set noruler
+  " ʕ◔ϖ◔ʔ Mapping for gonvim-fuzzy
+  nnoremap <leader><leader> :GonvimWorkspaceNew<CR>
+  nnoremap <leader>n :GonvimWorkspaceNext<CR>
+  nnoremap <leader>p :GonvimWorkspacePrevious<CR>
+  nnoremap <leader>ff :GonvimFuzzyFiles<CR>
+  nnoremap <leader>fg :GonvimFuzzyAg<CR>
+  nnoremap <leader>fb :GonvimFuzzyBuffers<CR>
+  nnoremap <leader>fl :GonvimFuzzyBLines<CR>
+endif

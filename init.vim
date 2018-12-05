@@ -11,8 +11,8 @@ endif
 
 " ʕ◔ϖ◔ʔ Python path
 if has("win64")
-  "" add python's path to the %PATH% environment variable, 
-  "" or set the following variable
+  "" ʕ◔ϖ◔ʔ  add python's path to the %PATH% environment variable, 
+  ""        or set the following variable
   "let g:python_host_prog =  'P:\ath\to\python2.exe'
   "let g:python3_host_prog = 'P:\ath\to\python3.exe'
 else
@@ -48,11 +48,7 @@ if dein#load_state(expand(s:dein_dir))
 
   " ʕ◔ϖ◔ʔ Define dein toml file
   let s:toml_dir  = expand($XDG_CONFIG_HOME) . '/nvim'
-  if has("win64")
-    let s:toml_file = s:toml_dir . '/dein-win.toml'
-  else
-    let s:toml_file = s:toml_dir . '/dein.toml'
-  endif
+  let s:toml_file = s:toml_dir . '/dein.toml'
   call dein#load_toml(s:toml_file, {'lazy': 0})
 
   call dein#end()
@@ -83,6 +79,10 @@ if exists('g:gonvim_running')
   set laststatus=0
   set noshowmode
   set noruler
+
+  " ʕ◔ϖ◔ʔ I use `ripgrep` for :GonvimFuzzyAg
+  let g:gonvim_fuzzy_ag_cmd = 'rg --column --line-number --no-heading --color never'
+
   " ʕ◔ϖ◔ʔ Mapping for gonvim-fuzzy
   nnoremap <leader><leader> :GonvimWorkspaceNew<CR>
   nnoremap <leader>n :GonvimWorkspaceNext<CR>
@@ -92,3 +92,8 @@ if exists('g:gonvim_running')
   nnoremap <leader>fb :GonvimFuzzyBuffers<CR>
   nnoremap <leader>fl :GonvimFuzzyBLines<CR>
 endif
+
+
+"" ʕ◔ϖ◔ʔ Your settings here
+" set ambiwidth=double   " for multibyte char
+
